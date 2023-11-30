@@ -1,18 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setFormData } from './Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
-/**name
- * age
- * email
- * 2 password (1 number, 1 WORD, 1word, 1 special cymbol)
- * gender (use radio buttons or select control)
- *  accept T&C (checkbox)
- * input control to upload picture (validate size and extension, allow png jpeg, save in redux store as base64)
- * autocomplete control to select country (all countries shoudl be stored in the Redux store)
- * Form should contain labels, which should be connected with inouts (look at htmlFor)
- */
+import { validationSchema } from './validation/validSchema';
+import * as yup from 'yup';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,13 +19,16 @@ const UncontrolledForm: React.FC = () => {
   const countryRef = useRef<HTMLInputElement>(null);
 
   const [passwordStrength, setPasswordStrength] = useState('');
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
 
   const checkPasswordStrength = (password: string) => {
     console.log(password);
     return password;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = {
       name: nameRef.current?.value || '',
@@ -45,10 +39,24 @@ const UncontrolledForm: React.FC = () => {
       gender: genderRef.current?.value || '',
       acceptTerms: acceptTermsRef.current?.checked || false,
     };
-    dispatch(setFormData(formData));
-    navigate('/success');
+
+    try {
+      await validationSchema.validate(formData, { abortEarly: false });
+      // Validation passed, proceed with form submission
+      dispatch(setFormData(formData));
+      navigate('/success');
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        if (error.inner) {
+          const errors: Record<string, string> = {};
+          error.inner.forEach((err) => {
+            errors[String(err.path)] = err.message;
+          });
+          setValidationErrors(errors);
+        }
+      }
+    }
   };
-  //{/* pattern='[A-Z][a-zA-Z]' */ }
 
   return (
     <div>
@@ -57,12 +65,15 @@ const UncontrolledForm: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" ref={nameRef} required />
+        <p>{validationErrors.name}</p>
 
         <label htmlFor="age">Age:</label>
         <input type="number" id="age" ref={ageRef} required min="0" />
+        <p>{validationErrors.age}</p>
 
         <label htmlFor="email">Email:</label>
         <input type="email" id="email" ref={emailRef} required />
+        <p>{validationErrors.email}</p>
 
         <label htmlFor="password">Password:</label>
         <input
@@ -75,6 +86,7 @@ const UncontrolledForm: React.FC = () => {
             setPasswordStrength(checkPasswordStrength(password));
           }}
         />
+        <p>{validationErrors.password}</p>
         <div>Password Strebgth: {passwordStrength}</div>
 
         <label htmlFor="confirmPassword">Confirm Password:</label>
@@ -84,6 +96,7 @@ const UncontrolledForm: React.FC = () => {
           ref={confirmPasswordRef}
           required
         />
+        <p>{validationErrors.confirmPassword}</p>
 
         <label>Gender:</label>
         <label htmlFor="male">Male</label>
@@ -102,11 +115,13 @@ const UncontrolledForm: React.FC = () => {
           value="female"
           ref={genderRef}
         />
+        <p>{validationErrors.gender}</p>
 
         <label>
           <input type="checkbox" ref={acceptTermsRef} />
           Accept T&C
         </label>
+        <p>{validationErrors.acceptTerms}</p>
 
         <label htmlFor="picture">Upload Picture:</label>
         <input

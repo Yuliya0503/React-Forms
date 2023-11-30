@@ -1,8 +1,10 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { setFormData } from './Store/formReduser';
 import { Link, useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from './validation/validSchema';
 
 interface FormInput {
   name: string;
@@ -11,19 +13,22 @@ interface FormInput {
   password: string;
   confirmPassword: string;
   gender: string;
-  acceptTerms: boolean;
-  //+picture + country
+  acceptTerms?: boolean;
 }
 
 const HookForm: React.FC = () => {
-  const { register, handleSubmit, watch } = useForm<FormInput>();
+  const resolver = yupResolver(validationSchema);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInput>({ resolver });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const password = watch('password', '');
-  //const confirmPassword = watch('confirmPassword', '');
-
-  const onSubmit = (data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
     dispatch(setFormData(data));
     navigate('/success');
   };
@@ -34,48 +39,37 @@ const HookForm: React.FC = () => {
       <h2>React Hook Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Name:</label>
-        <input
-          {...register('name', { required: true, pattern: /^[A-Z][a-zA-Z]*$/ })}
-        />
+        <input {...register('name')} />
+        <p>{errors.name?.message}</p>
 
         <label htmlFor="age">Age:</label>
-        <input {...register('age', { required: true, min: 0 })} type="number" />
+        <input {...register('age')} type="number" />
+        <p>{errors.age?.message}</p>
 
         <label htmlFor="email">Email:</label>
-        <input
-          {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-          type="email"
-        />
+        <input {...register('email')} type="email" />
+        <p>{errors.email?.message}</p>
 
         <label htmlFor="password">Password:</label>
-        <input
-          {...register('password', {
-            required: true,
-            // validate: (value) => {
-            // },
-          })}
-          type="password"
-        />
+        <input {...register('password')} type="password" />
+        <p>{errors.password?.message}</p>
 
         <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input
-          {...register('confirmPassword', {
-            required: true,
-            validate: (value) => value === password || 'Passwords should match',
-          })}
-          type="password"
-        />
+        <input {...register('confirmPassword')} type="password" />
+        <p>{errors.confirmPassword?.message}</p>
 
         <label>Gender:</label>
         <label htmlFor="male">Male</label>
         <input {...register('gender')} type="radio" value="male" />
         <label htmlFor="female">Female</label>
         <input {...register('gender')} type="radio" value="female" />
+        <p>{errors.gender?.message}</p>
 
         <label>
           <input {...register('acceptTerms')} type="checkbox" />
           Accept T&C
         </label>
+        <p>{errors.acceptTerms?.message}</p>
         <button type="submit">Submit</button>
       </form>
     </div>
