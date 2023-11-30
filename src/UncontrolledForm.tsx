@@ -32,7 +32,7 @@ const UncontrolledForm: React.FC = () => {
   const checkPasswordStrength = (password: string) => {
     console.log(password);
     return password;
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,30 +55,53 @@ const UncontrolledForm: React.FC = () => {
       <Link to="/">Home</Link>
       <h2>Uncontrolled Form</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='name'>Name:</label>
-        <input type='text' id='name' ref={nameRef} required />
+        <label htmlFor="name">Name:</label>
+        <input type="text" id="name" ref={nameRef} required />
 
         <label htmlFor="age">Age:</label>
-        <input type="number" id="age" ref={ageRef} required min='0' />
+        <input type="number" id="age" ref={ageRef} required min="0" />
 
         <label htmlFor="email">Email:</label>
         <input type="email" id="email" ref={emailRef} required />
 
         <label htmlFor="password">Password:</label>
-        <input type="password" id="password" ref={passwordRef} required onChange={(e) => {
-          const password = e.target.value;
-          setPasswordStrength(checkPasswordStrength(password));
-        }} />
+        <input
+          type="password"
+          id="password"
+          ref={passwordRef}
+          required
+          onChange={(e) => {
+            const password = e.target.value;
+            setPasswordStrength(checkPasswordStrength(password));
+          }}
+        />
         <div>Password Strebgth: {passwordStrength}</div>
 
         <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" ref={confirmPasswordRef} required />
+        <input
+          type="password"
+          id="confirmPassword"
+          ref={confirmPasswordRef}
+          required
+        />
 
         <label>Gender:</label>
         <label htmlFor="male">Male</label>
-        <input type="radio" name="gender" id="male" value="male" ref={genderRef} />
+        <input
+          type="radio"
+          name="gender"
+          id="male"
+          value="male"
+          ref={genderRef}
+        />
         <label htmlFor="female">Female</label>
-        <input type="radio" name="gender" id="female" value="female" ref={genderRef} />
+        <input
+          type="radio"
+          name="gender"
+          id="female"
+          value="female"
+          ref={genderRef}
+        />
 
         <label>
           <input type="checkbox" ref={acceptTermsRef} />
@@ -86,7 +109,12 @@ const UncontrolledForm: React.FC = () => {
         </label>
 
         <label htmlFor="picture">Upload Picture:</label>
-        <input type="file" id="picture" ref={pictureRef} accept='.png, .jpeg, .jpg' />
+        <input
+          type="file"
+          id="picture"
+          ref={pictureRef}
+          accept=".png, .jpeg, .jpg"
+        />
 
         <label htmlFor="country">Select Country:</label>
         <input type="text" id="country" ref={countryRef} />
