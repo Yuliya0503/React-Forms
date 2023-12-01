@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { FileObject } from '../models/interface'
+import { FileObject } from '../models/interface';
 
 export const validationSchema = yup.object().shape({
   name: yup
@@ -38,25 +38,17 @@ export const validationSchema = yup.object().shape({
     .required('Select a gender')
     .oneOf(['male', 'female', 'other'], 'Invalid gender'),
   acceptTerms: yup.boolean().oneOf([true], 'You must accept the terms'),
-  image: yup
-  .mixed()
-  .test(
-    'fileSize',
-    'File size is too large',
-    (value) => {
-      const file: FileObject | undefined = value as FileObject | undefined;
-      if (!file) return true;
+  image: yup.mixed().test('fileSize', 'File size is too large', (value) => {
+    const file: FileObject | undefined = value as FileObject | undefined;
+    if (!file) return true;
 
-      const fileSize = file.size;
-      const fileType = file.type;
+    const fileSize = file.size;
+    const fileType = file.type;
 
-      const isSizeValid = fileSize <= 1024 * 1024; // 1 MB
-      const isTypeValid = ['image/png', 'image/jpeg'].includes(fileType);
+    const isSizeValid = fileSize <= 1024 * 1024; // 1 MB
+    const isTypeValid = ['image/png', 'image/jpeg'].includes(fileType);
 
-      return isSizeValid && isTypeValid;
-    }
-  ),
-  countryId: yup
-    .string()
-    .required('Select a country')
+    return isSizeValid && isTypeValid;
+  }),
+  countryId: yup.string().required('Select a country'),
 });

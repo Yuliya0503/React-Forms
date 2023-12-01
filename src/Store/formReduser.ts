@@ -9,7 +9,7 @@ interface FormState {
     gender: string;
     acceptTerms: boolean;
     picture: string;
-  }
+  };
 }
 const initialState: FormState = {
   formData: {
@@ -20,7 +20,7 @@ const initialState: FormState = {
     confirmPassword: '',
     gender: '',
     acceptTerms: false,
-    picture: '', 
+    picture: '',
   },
 };
 
@@ -34,7 +34,7 @@ const formSlice = createSlice({
 
     setImageData: (state, action) => {
       state.formData.picture = action.payload;
-    }
+    },
   },
 });
 
