@@ -9,10 +9,10 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const storeSetup = () => {
   return configureStore({
-  reducer: {
-    reducer: rootReducer,
-  },
-});
+    reducer: {
+      reducer: rootReducer,
+    },
+  });
 };
 
 export const store = storeSetup();
