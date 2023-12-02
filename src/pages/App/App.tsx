@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../Store/store';
-import UncontrolledForm from '../../UncontrolledForm';
-import HookForm from '../../HookForm';
-import Main from '../../MainPage';
-import SuccessRedirect from '../../SuccessRedirect';
+import UncontrolledForm from '../UncontrolledForm/UncontrolledForm';
+import HookForm from '../HookForm/HookForm';
+import Main from '../Main/MainPage';
+import SuccessRedirect from './SuccessRedirect';
 import NotFound from '../NotFound/NotFound';
 
 const App: React.FC = () => (

@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setFormData, setImageData } from './Store/formReduser';
+import { setFormData, setImageData } from '../../Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
-import { validationSchema } from './validation/validSchema';
+import { validationSchema } from '../../validation/validSchema';
 import * as yup from 'yup';
 
 const UncontrolledForm: React.FC = () => {

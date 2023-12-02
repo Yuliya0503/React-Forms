@@ -1,10 +1,10 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { setFormData } from './Store/formReduser';
+import { setFormData } from '../../Store/formReduser';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { validationSchema } from './validation/validSchema';
+import { validationSchema } from '../../validation/validSchema';
 
 interface FormInput {
   name: string;
@@ -13,7 +13,9 @@ interface FormInput {
   password: string;
   confirmPassword: string;
   gender: string;
-  acceptTerms?: boolean;
+  acceptTerms?: boolean | undefined;
+  confirmEmail: string;  
+  countryId: string;
 }
 
 const HookForm: React.FC = () => {
