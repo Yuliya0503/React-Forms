@@ -38,7 +38,7 @@ const UncontrolledForm: React.FC = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       acceptTerms: acceptTermsRef.current?.checked || false,
-      countryId: countryRef.current?.value || '', 
+      countryId: countryRef.current?.value || '',
     };
 
     try {
@@ -46,7 +46,7 @@ const UncontrolledForm: React.FC = () => {
       if (pictureRef.current?.files?.[0]) {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(pictureRef.current.files[0]);
-    
+
         fileReader.onload = (event) => {
           if (event.target) {
             const base64Image = event.target.result as string;
@@ -135,19 +135,15 @@ const UncontrolledForm: React.FC = () => {
         <p>{validationErrors.acceptTerms}</p>
 
         <label htmlFor="picture">Upload Picture:</label>
-        <input
-          type="file"
-          id="picture"
-          ref={pictureRef}
-        />
+        <input type="file" id="picture" ref={pictureRef} />
 
         <label htmlFor="country">Select Country:</label>
         <select id="country" ref={countryRef}>
-        <option value="" label="Select a country" />
-        <option value="1" label="Country 1" />
-        <option value="2" label="Country 2" />
-      </select>
-      <p>{validationErrors.countryId}</p>
+          <option value="" label="Select a country" />
+          <option value="1" label="Country 1" />
+          <option value="2" label="Country 2" />
+        </select>
+        <p>{validationErrors.countryId}</p>
 
         <button type="submit">Submit</button>
       </form>
