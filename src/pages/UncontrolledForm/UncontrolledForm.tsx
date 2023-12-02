@@ -4,6 +4,7 @@ import { setFormData, setImageData } from '../../Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
 import { validationSchema } from '../../validation/validSchema';
 import * as yup from 'yup';
+import COUNTRIES_LIST from '../../models/constants';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -139,9 +140,10 @@ const UncontrolledForm: React.FC = () => {
 
         <label htmlFor="country">Select Country:</label>
         <select id="country" ref={countryRef}>
-          <option value="" label="Select a country" />
-          <option value="1" label="Country 1" />
-          <option value="2" label="Country 2" />
+        <option value="" label="Select a country" />
+          {COUNTRIES_LIST.map((country, index) => (
+            <option key={index} value={country} label={country} />
+          ))}
         </select>
         <p>{validationErrors.countryId}</p>
 

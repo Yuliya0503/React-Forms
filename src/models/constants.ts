@@ -194,5 +194,5 @@ const COUNTRIES_LIST = [
   'Yemen',
   'Zambia',
   'Zimbabwe',
-]
+];
 export default COUNTRIES_LIST;
