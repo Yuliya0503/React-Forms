@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setFormData } from './Store/formReduser';
+import { setFormData, setImageData } from './Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
 import { validationSchema } from './validation/validSchema';
 import * as yup from 'yup';
@@ -16,7 +16,7 @@ const UncontrolledForm: React.FC = () => {
   const genderRef = useRef<HTMLInputElement>(null);
   const acceptTermsRef = useRef<HTMLInputElement>(null);
   const pictureRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLSelectElement>(null);
 
   const [passwordStrength, setPasswordStrength] = useState('');
   const [validationErrors, setValidationErrors] = useState<
@@ -38,11 +38,22 @@ const UncontrolledForm: React.FC = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       acceptTerms: acceptTermsRef.current?.checked || false,
+      countryId: countryRef.current?.value || '', 
     };
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      // Validation passed, proceed with form submission
+      if (pictureRef.current?.files?.[0]) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(pictureRef.current.files[0]);
+    
+        fileReader.onload = (event) => {
+          if (event.target) {
+            const base64Image = event.target.result as string;
+            dispatch(setImageData(base64Image));
+          }
+        };
+      }
       dispatch(setFormData(formData));
       navigate('/success');
     } catch (error) {
@@ -128,11 +139,15 @@ const UncontrolledForm: React.FC = () => {
           type="file"
           id="picture"
           ref={pictureRef}
-          accept=".png, .jpeg, .jpg"
         />
 
         <label htmlFor="country">Select Country:</label>
-        <input type="text" id="country" ref={countryRef} />
+        <select id="country" ref={countryRef}>
+        <option value="" label="Select a country" />
+        <option value="1" label="Country 1" />
+        <option value="2" label="Country 2" />
+      </select>
+      <p>{validationErrors.countryId}</p>
 
         <button type="submit">Submit</button>
       </form>
