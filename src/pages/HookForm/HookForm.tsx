@@ -14,7 +14,7 @@ interface FormInput {
   confirmPassword: string;
   gender: string;
   acceptTerms?: boolean | undefined;
-  confirmEmail: string;  
+  confirmEmail: string;
   countryId: string;
 }
 
