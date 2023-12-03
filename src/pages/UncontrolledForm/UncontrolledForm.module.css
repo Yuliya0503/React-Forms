@@ -7,7 +7,7 @@
 }
 
 .title {
-  color:  #ead9ea;
+  color: #ead9ea;
 }
 .link {
   display: inline-block;
@@ -15,10 +15,10 @@
   font-size: 16px;
   text-align: center;
   text-decoration: none;
-  background-color:  #3d0631;
+  background-color: #3d0631;
   color: #ffffff;
   border-radius: 5px;
-  border: 1px solid  #ead9ea;
+  border: 1px solid #ead9ea;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -60,10 +60,10 @@ button {
   font-size: 16px;
   text-align: center;
   text-decoration: none;
-  background-color:  #3d0631;
+  background-color: #3d0631;
   color: #ffffff;
   border-radius: 5px;
-  border: 1px solid  #ead9ea;
+  border: 1px solid #ead9ea;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -82,7 +82,7 @@ p {
   min-width: 30%;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .gender {

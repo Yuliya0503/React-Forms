@@ -9,6 +9,7 @@ import { setCountries } from '../../Store/countrieesReduser';
 import COUNTRIES_LIST from '../../models/countries';
 import { RootState } from '../../Store/store';
 import { FormInput } from '../../models/interface';
+import styles from '../UncontrolledForm/UncontrolledForm.module.css';
 
 const HookForm: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,27 +48,27 @@ const HookForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <h2>React Hook Form</h2>
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
-        <label htmlFor="name">Name:</label>
+    <div className={styles.wrapper}>
+      <Link className={styles.link} to="/">Home</Link>
+      <h2 className={styles.title}>React Hook Form</h2>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)} autoComplete="on">
+        <label className={styles.label} htmlFor="name">Name:</label>
         <input {...register('name')} />
         <p>{errors.name?.message}</p>
 
-        <label htmlFor="age">Age:</label>
+        <label className={styles.label} htmlFor="age">Age:</label>
         <input {...register('age')} type="number" />
         <p>{errors.age?.message}</p>
 
-        <label htmlFor="email">Email:</label>
+        <label className={styles.label} htmlFor="email">Email:</label>
         <input {...register('email')} type="email" />
         <p>{errors.email?.message}</p>
 
-        <label htmlFor="confirmEmail">Confirm Email:</label>
+        <label className={styles.label} htmlFor="confirmEmail">Confirm Email:</label>
         <input {...register('confirmEmail')} type="email" />
         <p>{errors.confirmEmail?.message}</p>
 
-        <label htmlFor="password">Password:</label>
+        <label className={styles.label} htmlFor="password">Password:</label>
         <input
           {...register('password')}
           type="password"
@@ -80,29 +81,35 @@ const HookForm: React.FC = () => {
         <p>{errors.password?.message}</p>
         <div>Password Strength: {passwordStrength}</div>
 
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <label className={styles.label} htmlFor="confirmPassword">Confirm Password:</label>
         <input {...register('confirmPassword')} type="password" />
         <p>{errors.confirmPassword?.message}</p>
 
-        <label>Gender:</label>
-        <label htmlFor="male">Male</label>
-        <input {...register('gender')} type="radio" value="male" />
-        <label htmlFor="female">Female</label>
-        <input {...register('gender')} type="radio" value="female" />
+        <label className={styles.label}>Gender:</label>
+          <div className={styles.genders}>
+            <div className={styles.gender}>
+              <label className={styles.label} htmlFor="male">Male</label>
+              <input {...register('gender')} type="radio" value="male" />
+            </div>
+            <div className={styles.gender}>
+              <label className={styles.label} htmlFor="female">Female</label>
+              <input {...register('gender')} type="radio" value="female" />
+            </div>
+          </div>
         <p>{errors.gender?.message}</p>
 
-        <label>
-          <input {...register('acceptTerms')} type="checkbox" />
+        <label className={styles.checkbox}>
+          <input {...register('acceptTerms')} type="checkbox" className={styles.checkbox_input} />
           Accept T&C
         </label>
         <p>{errors.acceptTerms?.message}</p>
 
-        <label htmlFor="image">Upload Image:</label>
+        <label className={styles.label} htmlFor="image">Upload Image:</label>
         <input type="file" id="image" ref={fileInputRef} />
         <p>{errors.image?.message}</p>
 
-        <label htmlFor="countryId">Select Country:</label>
-        <select {...register('countryId')}>
+        <label className={styles.label} htmlFor="countryId">Select Country:</label>
+        <select className={styles.select} {...register('countryId')}>
           <option value="" label="Select a country" />
           {countries.map((country, index) => (
             <option key={index} value={country} label={country} />
