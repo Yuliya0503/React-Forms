@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFormData, setImageData } from '../../Store/formReduser';
@@ -10,11 +10,11 @@ import COUNTRIES_LIST from '../../models/countries';
 import { RootState } from '../../Store/store';
 import { FormInput } from '../../models/interface';
 import styles from '../UncontrolledForm/UncontrolledForm.module.css';
+import FormField from '../../components/FormField/FormField';
 
 const HookForm: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resolver = yupResolver(validationSchema) as Resolver<FormInput>;
-  const [passwordStrength, setPasswordStrength] = useState('');
   const {
     register,
     handleSubmit,
@@ -58,94 +58,77 @@ const HookForm: React.FC = () => {
         onSubmit={handleSubmit(onSubmit)}
         autoComplete="on"
       >
-        <label className={styles.label} htmlFor="name">
-          Name:
-        </label>
-        <input {...register('name')} />
-        <p>{errors.name?.message}</p>
+        <FormField label="Name" error={errors.name}>
+          <input {...register('name')} />
+        </FormField>
 
-        <label className={styles.label} htmlFor="age">
-          Age:
-        </label>
-        <input {...register('age')} type="number" />
-        <p>{errors.age?.message}</p>
+        <FormField label="Age" error={errors.age}>
+          <input {...register('age')} type="number" />
+        </FormField>
 
-        <label className={styles.label} htmlFor="email">
-          Email:
-        </label>
-        <input {...register('email')} type="email" />
-        <p>{errors.email?.message}</p>
+        <FormField label="Email" error={errors.email}>
+          <input {...register('email')} type="email" />
+        </FormField>
 
-        <label className={styles.label} htmlFor="confirmEmail">
-          Confirm Email:
-        </label>
-        <input {...register('confirmEmail')} type="email" />
-        <p>{errors.confirmEmail?.message}</p>
+        <FormField label="Confirm Email" error={errors.confirmEmail}>
+          <input {...register('confirmEmail')} type="email" />
+        </FormField>
 
-        <label className={styles.label} htmlFor="password">
-          Password:
-        </label>
-        <input
-          {...register('password')}
-          type="password"
-          onChange={(e) => {
-            const password = e.target.value;
-            setPasswordStrength(password);
-            setValue('password', password);
-          }}
-        />
-        <p>{errors.password?.message}</p>
-        <div>Password Strength: {passwordStrength}</div>
-
-        <label className={styles.label} htmlFor="confirmPassword">
-          Confirm Password:
-        </label>
-        <input {...register('confirmPassword')} type="password" />
-        <p>{errors.confirmPassword?.message}</p>
-
-        <label className={styles.label}>Gender:</label>
-        <div className={styles.genders}>
-          <div className={styles.gender}>
-            <label className={styles.label} htmlFor="male">
-              Male
-            </label>
-            <input {...register('gender')} type="radio" value="male" />
-          </div>
-          <div className={styles.gender}>
-            <label className={styles.label} htmlFor="female">
-              Female
-            </label>
-            <input {...register('gender')} type="radio" value="female" />
-          </div>
-        </div>
-        <p>{errors.gender?.message}</p>
-
-        <label className={styles.checkbox}>
+        <FormField label="Password" error={errors.password}>
           <input
-            {...register('acceptTerms')}
-            type="checkbox"
-            className={styles.checkbox_input}
+            {...register('password')}
+            type="password"
+            onChange={(e) => {
+              const password = e.target.value;
+              setValue('password', password);
+            }}
           />
-          Accept T&C
-        </label>
-        <p>{errors.acceptTerms?.message}</p>
+        </FormField>
 
-        <label className={styles.label} htmlFor="image">
-          Upload Image:
-        </label>
-        <input type="file" id="image" ref={fileInputRef} />
-        <p>{errors.image?.message}</p>
+        <FormField label="Confirm Password" error={errors.confirmPassword}>
+          <input {...register('confirmPassword')} type="password" />
+        </FormField>
 
-        <label className={styles.label} htmlFor="countryId">
-          Select Country:
-        </label>
-        <select className={styles.select} {...register('countryId')}>
-          <option value="" label="Select a country" />
-          {countries.map((country, index) => (
-            <option key={index} value={country} label={country} />
-          ))}
-        </select>
-        <p>{errors.countryId?.message}</p>
+        <FormField label="Gender" error={errors.gender}>
+          <div className={styles.genders}>
+            <div className={styles.gender}>
+              <label className={styles.label} htmlFor="male">
+                Male
+              </label>
+              <input {...register('gender')} type="radio" value="male" />
+            </div>
+            <div className={styles.gender}>
+              <label className={styles.label} htmlFor="female">
+                Female
+              </label>
+              <input {...register('gender')} type="radio" value="female" />
+            </div>
+          </div>
+        </FormField>
+
+        <FormField label="Accept Terms" error={errors.acceptTerms}>
+          <label className={styles.checkbox}>
+            <input
+              {...register('acceptTerms')}
+              type="checkbox"
+              className={styles.checkbox_input}
+            />
+            Accept T&C
+          </label>
+        </FormField>
+
+        <FormField label="Upload Image" error={errors.image}>
+          <input type="file" id="image" ref={fileInputRef} />
+        </FormField>
+
+        <FormField label="Select Country" error={errors.countryId}>
+          <select className={styles.select} {...register('countryId')}>
+            <option value="" label="Select a country" />
+            {countries.map((country, index) => (
+              <option key={index} value={country} label={country} />
+            ))}
+          </select>
+        </FormField>
 
         <button type="submit">Submit</button>
       </form>
