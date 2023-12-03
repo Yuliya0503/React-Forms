@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../Store/store';
 import ImageDisplay from '../../components/ImageDispaly/ImageDispaly';
+import styles from './MainPage.module.css';
 
 const Main: React.FC = () => {
   const base64Image = useSelector(
@@ -10,18 +11,15 @@ const Main: React.FC = () => {
   );
 
   return (
-    <div>
-      <h2>Main Page</h2>
+    <div className={styles.main_container}>
+      <h2 className={styles.title}>Main Page</h2>
       <nav>
-        <ul>
+        <ul className={styles.nav_list}>
           <li>
-            <Link to="/">Home</Link>
+            <Link className={styles.link} to="/uncontrolled-form">Uncontrolled Form</Link>
           </li>
           <li>
-            <Link to="/uncontrolled-form">Uncontrolled Form</Link>
-          </li>
-          <li>
-            <Link to="/hook-form">React Hook Form</Link>
+            <Link className={styles.link} to="/hook-form">React Hook Form</Link>
           </li>
         </ul>
       </nav>

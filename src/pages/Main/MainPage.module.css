@@ -1,0 +1,38 @@
+.main_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.nav_list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.nav_list li {
+  margin-right: 10px;
+}
+
+.link {
+  text-decoration: none;
+  padding: 10px 15px;
+  background-color: #4CAF50; 
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.link:hover {
+  background-color: #45a049;
+  border-radius: 10px;
+}
+
+.title {
+  margin: auto;
+  text-align: center;
+}
