@@ -15,57 +15,59 @@ const UncontrolledForm: React.FC = () => {
   const countries = useSelector(
     (state: RootState) => state.countries.countries
   );
-  const nameRef = useRef<HTMLInputElement>(null);
-  const ageRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
-  const genderRef = useRef<HTMLInputElement>(null);
-  const acceptTermsRef = useRef<HTMLInputElement>(null);
-  const pictureRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLSelectElement>(null);
-  const confirmEmailRef = useRef<HTMLInputElement>(null);
+  const formRefs = {
+    name: useRef<HTMLInputElement>(null),
+    age: useRef<HTMLInputElement>(null),
+    email: useRef<HTMLInputElement>(null),
+    password: useRef<HTMLInputElement>(null),
+    confirmPassword: useRef<HTMLInputElement>(null),
+    gender: useRef<HTMLInputElement>(null),
+    acceptTerms: useRef<HTMLInputElement>(null),
+    picture: useRef<HTMLInputElement>(null),
+    country: useRef<HTMLSelectElement>(null),
+    confirmEmail: useRef<HTMLInputElement>(null),
+  };
 
-  const [passwordStrength, setPasswordStrength] = useState('');
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
-
-  const checkPasswordStrength = (password: string) => {
-    return password;
-  };
 
   useEffect(() => {
     dispatch(setCountries(COUNTRIES_LIST));
   }, [dispatch]);
 
+  const handleFileChange = () => {
+    if (formRefs.picture.current?.files?.[0]) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(formRefs.picture.current.files[0]);
+
+      fileReader.onload = (event) => {
+        if (event.target) {
+          const base64Image = event.target.result as string;
+          dispatch(setImageData(base64Image));
+        }
+      };
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const formData = {
-      name: nameRef.current?.value || '',
-      age: parseInt(ageRef.current?.value || '0', 10),
-      email: emailRef.current?.value || '',
-      password: passwordRef.current?.value || '',
-      confirmPassword: confirmPasswordRef.current?.value || '',
-      gender: genderRef.current?.value || '',
-      acceptTerms: acceptTermsRef.current?.checked || false,
-      countryId: countryRef.current?.value || '',
-      confirmEmail: confirmEmailRef.current?.value || '',
+      name: formRefs.name.current?.value || '',
+      age: parseInt(formRefs.age.current?.value || '0', 10),
+      email: formRefs.email.current?.value || '',
+      password: formRefs.password.current?.value || '',
+      confirmPassword: formRefs.confirmPassword.current?.value || '',
+      gender: formRefs.gender.current?.value || '',
+      acceptTerms: formRefs.acceptTerms.current?.checked || false,
+      countryId: formRefs.country.current?.value || '',
+      confirmEmail: formRefs.confirmEmail.current?.value || '',
     };
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      if (pictureRef.current?.files?.[0]) {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(pictureRef.current.files[0]);
-
-        fileReader.onload = (event) => {
-          if (event.target) {
-            const base64Image = event.target.result as string;
-            dispatch(setImageData(base64Image));
-          }
-        };
-      }
+      handleFileChange();
       dispatch(setFormData(formData));
       navigate('/success');
     } catch (error) {
@@ -91,25 +93,25 @@ const UncontrolledForm: React.FC = () => {
         <label className={styles.label} htmlFor="name">
           Name:
         </label>
-        <input type="text" id="name" ref={nameRef} required />
+        <input type="text" id="name" ref={formRefs.name} required />
         <p>{validationErrors.name}</p>
 
         <label className={styles.label} htmlFor="age">
           Age:
         </label>
-        <input type="number" id="age" ref={ageRef} required min="0" />
+        <input type="number" id="age" ref={formRefs.age} required min="0" />
         <p>{validationErrors.age}</p>
 
         <label className={styles.label} htmlFor="email">
           Email:
         </label>
-        <input type="email" id="email" ref={emailRef} required />
+        <input type="email" id="email" ref={formRefs.email} required />
         <p>{validationErrors.email}</p>
 
         <label className={styles.label} htmlFor="confirmEmail">
           Confirm Email:
         </label>
-        <input type="email" id="confirmEmail" ref={confirmEmailRef} required />
+        <input type="email" id="confirmEmail" ref={formRefs.confirmEmail} required />
         <p>{validationErrors.confirmEmail}</p>
 
         <label className={styles.label} htmlFor="password">
@@ -118,15 +120,10 @@ const UncontrolledForm: React.FC = () => {
         <input
           type="password"
           id="password"
-          ref={passwordRef}
+          ref={formRefs.password}
           required
-          onChange={(e) => {
-            const password = e.target.value;
-            setPasswordStrength(checkPasswordStrength(password));
-          }}
         />
         <p>{validationErrors.password}</p>
-        <div>Password Strength: {passwordStrength}</div>
 
         <label className={styles.label} htmlFor="confirmPassword">
           Confirm Password:
@@ -134,7 +131,7 @@ const UncontrolledForm: React.FC = () => {
         <input
           type="password"
           id="confirmPassword"
-          ref={confirmPasswordRef}
+          ref={formRefs.confirmPassword}
           required
         />
         <p>{validationErrors.confirmPassword}</p>
@@ -150,7 +147,7 @@ const UncontrolledForm: React.FC = () => {
               name="gender"
               id="male"
               value="male"
-              ref={genderRef}
+              ref={formRefs.gender}
             />
           </div>
           <div className={styles.gender}>
@@ -162,7 +159,7 @@ const UncontrolledForm: React.FC = () => {
               name="gender"
               id="female"
               value="female"
-              ref={genderRef}
+              ref={formRefs.gender}
             />
           </div>
         </div>
@@ -172,7 +169,7 @@ const UncontrolledForm: React.FC = () => {
           <input
             className={styles.checkbox_input}
             type="checkbox"
-            ref={acceptTermsRef}
+            ref={formRefs.acceptTerms}
           />
           Accept T&C
         </label>
@@ -181,12 +178,12 @@ const UncontrolledForm: React.FC = () => {
         <label className={styles.label} htmlFor="picture">
           Upload Picture:
         </label>
-        <input type="file" id="picture" ref={pictureRef} />
+        <input type="file" id="picture" ref={formRefs.picture} />
 
         <label className={styles.label} htmlFor="country">
           Select Country:
         </label>
-        <select className={styles.select} id="country" ref={countryRef}>
+        <select className={styles.select} id="country" ref={formRefs.country}>
           <option value="" label="Select a country" />
           {countries.map((country, index) => (
             <option key={index} value={country} label={country} />
