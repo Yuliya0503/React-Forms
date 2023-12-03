@@ -8,6 +8,8 @@ import COUNTRIES_LIST from '../../models/countries';
 import { setCountries } from '../../Store/countrieesReduser';
 import { RootState } from '../../Store/store';
 import styles from './UncontrolledForm.module.css';
+import RadioField from '../../components/RadioField/RadioField';
+import InputField from '../../components/InputField/InputField';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -90,78 +92,70 @@ const UncontrolledForm: React.FC = () => {
       </Link>
       <h2 className={styles.title}>Uncontrolled Form</h2>
       <form className={styles.form} onSubmit={handleSubmit} autoComplete="on">
-        <label className={styles.label} htmlFor="name">
-          Name:
-        </label>
-        <input type="text" id="name" ref={formRefs.name} required />
-        <p>{validationErrors.name}</p>
-
-        <label className={styles.label} htmlFor="age">
-          Age:
-        </label>
-        <input type="number" id="age" ref={formRefs.age} required min="0" />
-        <p>{validationErrors.age}</p>
-
-        <label className={styles.label} htmlFor="email">
-          Email:
-        </label>
-        <input type="email" id="email" ref={formRefs.email} required />
-        <p>{validationErrors.email}</p>
-
-        <label className={styles.label} htmlFor="confirmEmail">
-          Confirm Email:
-        </label>
-        <input type="email" id="confirmEmail" ref={formRefs.confirmEmail} required />
-        <p>{validationErrors.confirmEmail}</p>
-
-        <label className={styles.label} htmlFor="password">
-          Password:
-        </label>
-        <input
-          type="password"
+        <InputField
+          id="name"
+          label="Name"
+          type="text"
+          ref={formRefs.name}
+          required
+          validationError={validationErrors.name}
+        />
+        <InputField
+          id="age"
+          label="Age"
+          type="number"
+          ref={formRefs.age}
+          required
+          min="0"
+          validationError={validationErrors.age}
+        />
+        <InputField
+          id="email"
+          label="Email"
+          type="email"
+          ref={formRefs.email}
+          required
+          validationError={validationErrors.email}
+        />
+        <InputField
+          id="confirmEmail"
+          label="Confirm Email"
+          type="email"
+          ref={formRefs.confirmEmail}
+          required
+          validationError={validationErrors.confirmEmail}
+        />
+        <InputField
           id="password"
+          label="Password"
+          type="password"
           ref={formRefs.password}
           required
+          validationError={validationErrors.password}
         />
-        <p>{validationErrors.password}</p>
-
-        <label className={styles.label} htmlFor="confirmPassword">
-          Confirm Password:
-        </label>
-        <input
-          type="password"
+        <InputField
           id="confirmPassword"
+          label="Confirm Password"
+          type="password"
           ref={formRefs.confirmPassword}
           required
+          validationError={validationErrors.confirmPassword}
         />
-        <p>{validationErrors.confirmPassword}</p>
 
         <label className={styles.label}>Gender:</label>
         <div className={styles.genders}>
-          <div className={styles.gender}>
-            <label className={styles.label} htmlFor="male">
-              Male
-            </label>
-            <input
-              type="radio"
-              name="gender"
-              id="male"
-              value="male"
-              ref={formRefs.gender}
-            />
-          </div>
-          <div className={styles.gender}>
-            <label className={styles.label} htmlFor="female">
-              Female
-            </label>
-            <input
-              type="radio"
-              name="gender"
-              id="female"
-              value="female"
-              ref={formRefs.gender}
-            />
-          </div>
+          <RadioField
+            id="male"
+            label="Male"
+            value="male"
+            ref={formRefs.gender}
+          />
+          <RadioField
+            id="female"
+            label="Female"
+            value="female"
+            ref={formRefs.gender}
+          />
         </div>
         <p>{validationErrors.gender}</p>
 
