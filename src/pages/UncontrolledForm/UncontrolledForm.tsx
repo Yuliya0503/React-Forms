@@ -4,7 +4,7 @@ import { setFormData, setImageData } from '../../Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
 import { validationSchema } from '../../validation/validSchema';
 import * as yup from 'yup';
-import COUNTRIES_LIST from '../../models/constants';
+import COUNTRIES_LIST from '../../models/countries';
 import { setCountries } from '../../Store/countrieesReduser';
 import { RootState } from '../../Store/store';
 

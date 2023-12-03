@@ -1,6 +1,4 @@
-interface ImageDisplayProps {
-  base64Image: string;
-}
+import { ImageDisplayProps } from '../../models/interface';
 
 const ImageDisplay: React.FC<ImageDisplayProps> = ({ base64Image }) => {
   return (

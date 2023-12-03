@@ -6,21 +6,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../validation/validSchema';
 import { setCountries } from '../../Store/countrieesReduser';
-import COUNTRIES_LIST from '../../models/constants';
+import COUNTRIES_LIST from '../../models/countries';
 import { RootState } from '../../Store/store';
-
-interface FormInput {
-  name: string;
-  age: number;
-  email: string;
-  confirmEmail: string;
-  password: string;
-  confirmPassword: string;
-  gender: string;
-  acceptTerms: boolean | undefined;
-  image: FileList | undefined;
-  countryId: string;
-}
+import { FormInput } from '../../models/interface';
 
 const HookForm: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);

@@ -5,7 +5,7 @@ import { store } from '../../Store/store';
 import UncontrolledForm from '../UncontrolledForm/UncontrolledForm';
 import HookForm from '../HookForm/HookForm';
 import Main from '../Main/MainPage';
-import SuccessRedirect from './SuccessRedirect';
+import SuccessRedirect from '../../components/SuccessRedirect';
 import NotFound from '../NotFound/NotFound';
 
 const App: React.FC = () => (

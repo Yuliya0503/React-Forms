@@ -1,28 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-interface FormState {
-  formData: {
-    name: string;
-    age: number;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    gender: string;
-    acceptTerms: boolean;
-    picture: string;
-  };
-}
-const initialState: FormState = {
-  formData: {
-    name: '',
-    age: 0,
-    email: '',
-    password: '',
-    confirmPassword: '',
-    gender: '',
-    acceptTerms: false,
-    picture: '',
-  },
-};
+import { initialState } from '../models/constants';
+
 
 const formSlice = createSlice({
   name: 'form',
