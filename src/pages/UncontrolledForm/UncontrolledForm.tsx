@@ -1,14 +1,19 @@
-import React, { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFormData, setImageData } from '../../Store/formReduser';
 import { useNavigate, Link } from 'react-router-dom';
 import { validationSchema } from '../../validation/validSchema';
 import * as yup from 'yup';
 import COUNTRIES_LIST from '../../models/constants';
+import { setCountries } from '../../Store/countrieesReduser';
+import { RootState } from '../../Store/store';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const countries = useSelector(
+    (state: RootState) => state.countries.countries
+  );
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -18,6 +23,7 @@ const UncontrolledForm: React.FC = () => {
   const acceptTermsRef = useRef<HTMLInputElement>(null);
   const pictureRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLSelectElement>(null);
+  const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   const [passwordStrength, setPasswordStrength] = useState('');
   const [validationErrors, setValidationErrors] = useState<
@@ -25,9 +31,12 @@ const UncontrolledForm: React.FC = () => {
   >({});
 
   const checkPasswordStrength = (password: string) => {
-    console.log(password);
     return password;
   };
+
+  useEffect(() => {
+    dispatch(setCountries(COUNTRIES_LIST));
+  }, [dispatch]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +49,7 @@ const UncontrolledForm: React.FC = () => {
       gender: genderRef.current?.value || '',
       acceptTerms: acceptTermsRef.current?.checked || false,
       countryId: countryRef.current?.value || '',
+      confirmEmail: confirmEmailRef.current?.value || '',
     };
 
     try {
@@ -87,6 +97,10 @@ const UncontrolledForm: React.FC = () => {
         <input type="email" id="email" ref={emailRef} required />
         <p>{validationErrors.email}</p>
 
+        <label htmlFor="confirmEmail">Confirm Email:</label>
+        <input type="email" id="confirmEmail" ref={confirmEmailRef} required />
+        <p>{validationErrors.confirmEmail}</p>
+
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -99,7 +113,7 @@ const UncontrolledForm: React.FC = () => {
           }}
         />
         <p>{validationErrors.password}</p>
-        <div>Password Strebgth: {passwordStrength}</div>
+        <div>Password Strength: {passwordStrength}</div>
 
         <label htmlFor="confirmPassword">Confirm Password:</label>
         <input
@@ -140,8 +154,8 @@ const UncontrolledForm: React.FC = () => {
 
         <label htmlFor="country">Select Country:</label>
         <select id="country" ref={countryRef}>
-        <option value="" label="Select a country" />
-          {COUNTRIES_LIST.map((country, index) => (
+          <option value="" label="Select a country" />
+          {countries.map((country, index) => (
             <option key={index} value={country} label={country} />
           ))}
         </select>
