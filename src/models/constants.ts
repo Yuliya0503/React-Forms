@@ -1,4 +1,4 @@
-import { FormState } from "./interface";
+import { FormState } from './interface';
 
 export const initialState: FormState = {
   formData: {

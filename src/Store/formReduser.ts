@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialState } from '../models/constants';
 
-
 const formSlice = createSlice({
   name: 'form',
   initialState,

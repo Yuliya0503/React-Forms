@@ -3,7 +3,7 @@ export interface FileObject {
   type: string;
 }
 
- export interface FormInput {
+export interface FormInput {
   name: string;
   age: number;
   email: string;
