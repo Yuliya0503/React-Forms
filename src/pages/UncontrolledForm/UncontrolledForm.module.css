@@ -1,0 +1,98 @@
+.wrapper {
+  background-color: #230e1c;
+  color: #d034d0;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.title {
+  color:  #ead9ea;
+}
+.link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color:  #3d0631;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid  #ead9ea;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link:hover {
+  background-color: #280420;
+  color: #ffffff;
+}
+
+.form {
+  margin-top: 20px;
+}
+
+.label {
+  display: block;
+  margin: 10px 0;
+  color: #ead9ea;
+}
+
+input {
+  width: 50%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #3d0631;
+  border-radius: 15px;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #3d0631;
+  border-radius: 15px;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color:  #3d0631;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid  #ead9ea;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: #280420;
+  color: #ffffff;
+}
+
+p {
+  color: #e74c3c;
+}
+
+.genders {
+  display: flex;
+  min-width: 30%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; 
+}
+
+.gender {
+  margin: 15px;
+}
+
+.checkbox_input {
+  width: 30px;
+}
+
+.select {
+  width: 50%;
+}

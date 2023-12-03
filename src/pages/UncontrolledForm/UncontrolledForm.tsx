@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import COUNTRIES_LIST from '../../models/countries';
 import { setCountries } from '../../Store/countrieesReduser';
 import { RootState } from '../../Store/store';
+import styles from './UncontrolledForm.module.css';
 
 const UncontrolledForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -81,27 +82,27 @@ const UncontrolledForm: React.FC = () => {
   };
 
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <h2>Uncontrolled Form</h2>
-      <form onSubmit={handleSubmit} autoComplete="on">
-        <label htmlFor="name">Name:</label>
+    <div className={styles.wrapper}>
+      <Link className={styles.link} to="/">Home</Link>
+      <h2 className={styles.title}>Uncontrolled Form</h2>
+      <form className={styles.form} onSubmit={handleSubmit} autoComplete="on">
+        <label className={styles.label} htmlFor="name">Name:</label>
         <input type="text" id="name" ref={nameRef} required />
         <p>{validationErrors.name}</p>
 
-        <label htmlFor="age">Age:</label>
+        <label className={styles.label} htmlFor="age">Age:</label>
         <input type="number" id="age" ref={ageRef} required min="0" />
         <p>{validationErrors.age}</p>
 
-        <label htmlFor="email">Email:</label>
+        <label className={styles.label} htmlFor="email">Email:</label>
         <input type="email" id="email" ref={emailRef} required />
         <p>{validationErrors.email}</p>
 
-        <label htmlFor="confirmEmail">Confirm Email:</label>
+        <label className={styles.label} htmlFor="confirmEmail">Confirm Email:</label>
         <input type="email" id="confirmEmail" ref={confirmEmailRef} required />
         <p>{validationErrors.confirmEmail}</p>
 
-        <label htmlFor="password">Password:</label>
+        <label className={styles.label} htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
@@ -115,7 +116,7 @@ const UncontrolledForm: React.FC = () => {
         <p>{validationErrors.password}</p>
         <div>Password Strength: {passwordStrength}</div>
 
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <label className={styles.label} htmlFor="confirmPassword">Confirm Password:</label>
         <input
           type="password"
           id="confirmPassword"
@@ -124,36 +125,30 @@ const UncontrolledForm: React.FC = () => {
         />
         <p>{validationErrors.confirmPassword}</p>
 
-        <label>Gender:</label>
-        <label htmlFor="male">Male</label>
-        <input
-          type="radio"
-          name="gender"
-          id="male"
-          value="male"
-          ref={genderRef}
-        />
-        <label htmlFor="female">Female</label>
-        <input
-          type="radio"
-          name="gender"
-          id="female"
-          value="female"
-          ref={genderRef}
-        />
+        <label className={styles.label} >Gender:</label>
+        <div className={styles.genders}>
+          <div className={styles.gender}>
+            <label className={styles.label} htmlFor="male">Male</label>
+            <input type="radio" name="gender" id="male" value="male" ref={genderRef} />
+          </div>
+          <div className={styles.gender}>
+          <label className={styles.label} htmlFor="female">Female</label>
+          <input type="radio" name="gender" id="female" value="female" ref={genderRef} />
+          </div>        
+        </div>
         <p>{validationErrors.gender}</p>
 
-        <label>
-          <input type="checkbox" ref={acceptTermsRef} />
+        <label className={styles.checkbox}>
+          <input className={styles.checkbox_input} type="checkbox" ref={acceptTermsRef} />
           Accept T&C
         </label>
         <p>{validationErrors.acceptTerms}</p>
 
-        <label htmlFor="picture">Upload Picture:</label>
+        <label className={styles.label} htmlFor="picture">Upload Picture:</label>
         <input type="file" id="picture" ref={pictureRef} />
 
-        <label htmlFor="country">Select Country:</label>
-        <select id="country" ref={countryRef}>
+        <label className={styles.label} htmlFor="country">Select Country:</label>
+        <select className={styles.select} id="country" ref={countryRef}>
           <option value="" label="Select a country" />
           {countries.map((country, index) => (
             <option key={index} value={country} label={country} />
