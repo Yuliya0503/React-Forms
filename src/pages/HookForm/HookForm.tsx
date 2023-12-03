@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFormData, setImageData } from '../../Store/formReduser';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../validation/validSchema';
-import { FileObject } from '../../models/interface';
+//import { FileObject } from '../../models/interface';
 import { setCountries } from '../../Store/countrieesReduser';
 import COUNTRIES_LIST from '../../models/constants';
 import { RootState } from '../../Store/store';
@@ -19,11 +19,12 @@ interface FormInput {
   confirmPassword: string;
   gender: string;
   acceptTerms: boolean | undefined;
-  image: FileObject | undefined;
+  image:  FileList | undefined;
   countryId: string;
 }
 
 const HookForm: React.FC = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const resolver = yupResolver(validationSchema) as Resolver<FormInput>;
   const [passwordStrength, setPasswordStrength] = useState('');
   const {
@@ -43,24 +44,57 @@ const HookForm: React.FC = () => {
     dispatch(setCountries(COUNTRIES_LIST));
   }, [dispatch]);
 
-  const onSubmit: SubmitHandler<FormInput> = (data: FormInput) => {
+  // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+
+  //     try {
+  //       console.log('File selected:', file);
+  //       const base64Image = await convertFileToBase64(file);
+  //       dispatch(setImageData(base64Image));
+  //       console.log(base64Image)
+  //     } catch (error) {
+  //       console.error('Error converting file to base64:', error);
+  //     }
+  //   }
+  // };
+
+  const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
+    console.log('Form Data:', data);
+    if (fileInputRef.current?.files?.[0]) {
+      const file = new FileReader();
+      file.readAsDataURL(fileInputRef.current.files[0]);
+      file.onload = async (event) => {
+        if(event.target) {
+          const base64Image = event.target.result as string;
+          dispatch(setImageData(base64Image));
+        }
+      }
+    } else {
+      console.log('No image selected');
+    }
     dispatch(setFormData(data));
     navigate('/success');
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(event.target.files[0]);
+  // const convertFileToBase64 = (file: ): Promise<string> => {
+  //   return new Promise((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
 
-      fileReader.onload = (event) => {
-        if (event.target) {
-          const base64Image = event.target.result as string;
-          dispatch(setImageData(base64Image));
-        }
-      };
-    }
-  };
+  //     fileReader.onload = () => {
+  //       if (fileReader.result) {
+  //         resolve(fileReader.result as string);
+  //       } else {
+  //         reject('Failed to read the file');
+  //       }
+  //     };
+
+  //     fileReader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
 
   return (
     <div>
@@ -114,7 +148,7 @@ const HookForm: React.FC = () => {
         <p>{errors.acceptTerms?.message}</p>
 
         <label htmlFor="image">Upload Image:</label>
-        <input type="file" id="image" onChange={handleFileChange} />
+        <input type="file" id="image" ref={fileInputRef}/>
         <p>{errors.image?.message}</p>
 
         <label htmlFor="countryId">Select Country:</label>

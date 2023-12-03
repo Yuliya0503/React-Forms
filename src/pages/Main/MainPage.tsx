@@ -25,7 +25,7 @@ const Main: React.FC = () => {
           </li>
         </ul>
       </nav>
-      {base64Image && <ImageDisplay />}
+      {base64Image && <ImageDisplay base64Image={base64Image} />}
     </div>
   );
 };

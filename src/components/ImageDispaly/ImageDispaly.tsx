@@ -1,17 +1,15 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../Store/store';
+interface ImageDisplayProps {
+  base64Image: string;
+}
 
-const ImageDisplay = () => {
-  const base64Image = useSelector(
-    (state: RootState) => state.form.formData.picture
-  );
-
+const ImageDisplay: React.FC<ImageDisplayProps> = ({ base64Image }) => {
   return (
     <div>
       <h2>Image Display</h2>
-      {base64Image && <img src={base64Image} alt="Uploaded" />}
+      <img src={base64Image} alt="Uploaded" />
     </div>
   );
 };
+
 
 export default ImageDisplay;
