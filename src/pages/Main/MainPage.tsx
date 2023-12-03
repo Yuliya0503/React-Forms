@@ -16,10 +16,14 @@ const Main: React.FC = () => {
       <nav>
         <ul className={styles.nav_list}>
           <li>
-            <Link className={styles.link} to="/uncontrolled-form">Uncontrolled Form</Link>
+            <Link className={styles.link} to="/uncontrolled-form">
+              Uncontrolled Form
+            </Link>
           </li>
           <li>
-            <Link className={styles.link} to="/hook-form">React Hook Form</Link>
+            <Link className={styles.link} to="/hook-form">
+              React Hook Form
+            </Link>
           </li>
         </ul>
       </nav>

@@ -5,7 +5,9 @@ const NotFound = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>Oops!</h2>
-      <Link className={styles.link} to="/">Go Home!</Link>
+      <Link className={styles.link} to="/">
+        Go Home!
+      </Link>
     </div>
   );
 };

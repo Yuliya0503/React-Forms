@@ -14,7 +14,7 @@
   height: 60px;
   font-size: 70px;
   text-shadow: #c73b11;
-  color:#7e3823;
+  color: #7e3823;
 }
 
 .link {
@@ -24,7 +24,7 @@
   text-align: center;
   text-decoration: none;
   background-color: #220f09;
-  color:#c73b11;
+  color: #c73b11;
   border-radius: 5px;
   border: 1px solid #c73b11;
   cursor: pointer;
@@ -33,5 +33,5 @@
 
 .link:hover {
   background-color: #180e0b;
-  color: #ffffff; 
+  color: #ffffff;
 }
