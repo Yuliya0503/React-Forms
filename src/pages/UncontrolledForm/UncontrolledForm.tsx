@@ -84,7 +84,7 @@ const UncontrolledForm: React.FC = () => {
     <div>
       <Link to="/">Home</Link>
       <h2>Uncontrolled Form</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete="on">
         <label htmlFor="name">Name:</label>
         <input type="text" id="name" ref={nameRef} required />
         <p>{validationErrors.name}</p>

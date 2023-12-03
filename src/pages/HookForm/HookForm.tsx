@@ -5,7 +5,6 @@ import { setFormData, setImageData } from '../../Store/formReduser';
 import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../validation/validSchema';
-//import { FileObject } from '../../models/interface';
 import { setCountries } from '../../Store/countrieesReduser';
 import COUNTRIES_LIST from '../../models/constants';
 import { RootState } from '../../Store/store';
@@ -19,7 +18,7 @@ interface FormInput {
   confirmPassword: string;
   gender: string;
   acceptTerms: boolean | undefined;
-  image:  FileList | undefined;
+  image: FileList | undefined;
   countryId: string;
 }
 
@@ -44,63 +43,26 @@ const HookForm: React.FC = () => {
     dispatch(setCountries(COUNTRIES_LIST));
   }, [dispatch]);
 
-  // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-
-  //     try {
-  //       console.log('File selected:', file);
-  //       const base64Image = await convertFileToBase64(file);
-  //       dispatch(setImageData(base64Image));
-  //       console.log(base64Image)
-  //     } catch (error) {
-  //       console.error('Error converting file to base64:', error);
-  //     }
-  //   }
-  // };
-
   const onSubmit: SubmitHandler<FormInput> = async (data: FormInput) => {
-    console.log('Form Data:', data);
     if (fileInputRef.current?.files?.[0]) {
       const file = new FileReader();
       file.readAsDataURL(fileInputRef.current.files[0]);
       file.onload = async (event) => {
-        if(event.target) {
+        if (event.target) {
           const base64Image = event.target.result as string;
           dispatch(setImageData(base64Image));
         }
-      }
-    } else {
-      console.log('No image selected');
+      };
     }
     dispatch(setFormData(data));
     navigate('/success');
   };
 
-  // const convertFileToBase64 = (file: ): Promise<string> => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
-
-  //     fileReader.onload = () => {
-  //       if (fileReader.result) {
-  //         resolve(fileReader.result as string);
-  //       } else {
-  //         reject('Failed to read the file');
-  //       }
-  //     };
-
-  //     fileReader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //   });
-  // };
-
   return (
     <div>
       <Link to="/">Home</Link>
       <h2>React Hook Form</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
         <label htmlFor="name">Name:</label>
         <input {...register('name')} />
         <p>{errors.name?.message}</p>
@@ -148,7 +110,7 @@ const HookForm: React.FC = () => {
         <p>{errors.acceptTerms?.message}</p>
 
         <label htmlFor="image">Upload Image:</label>
-        <input type="file" id="image" ref={fileInputRef}/>
+        <input type="file" id="image" ref={fileInputRef} />
         <p>{errors.image?.message}</p>
 
         <label htmlFor="countryId">Select Country:</label>

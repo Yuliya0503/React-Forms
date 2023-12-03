@@ -11,5 +11,4 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({ base64Image }) => {
   );
 };
 
-
 export default ImageDisplay;
